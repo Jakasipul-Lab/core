@@ -6,7 +6,7 @@ Main application module for East African mobility routing and booking engine.
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+from fastapi.responses import HTMLResponse
 import os
 
 # Import core modules
@@ -19,55 +19,65 @@ from app.core.database import init_db, close_db
 async def lifespan(app: FastAPI):
     """Manage application lifecycle - startup and shutdown."""
     # Startup
-    print("🚀 Starting Jakasipul Core API...")
+    print(f"🚀 Starting {settings.project_name} in {settings.environment} mode...")
     await init_db()
-    print("✅ Database connection established")
     
     yield
     
     # Shutdown
-    print("🛑 Shutting down Jakasipul Core API...")
+    print(f"🛑 Shutting down {settings.project_name}...")
     await close_db()
-    print("✅ Database connection closed")
 
 
-# Initialize FastAPI application
+# Initialize FastAPI application using your dynamic Pydantic settings
 app = FastAPI(
-    title="Jakasipul Core API",
+    title=settings.project_name,
     description="East African Mobility Routing & Booking Engine",
-    version="1.0.0",
+    version=settings.app_version,
     lifespan=lifespan
 )
 
 
-# Health check endpoint
+# Health check endpoint (Used by your Docker healthcheck!)
 @app.get("/health")
 async def health_check():
     """Health check endpoint for monitoring and load balancers."""
     return {
         "status": "healthy",
-        "service": "Jakasipul Core API",
-        "version": "1.0.0"
+        "service": settings.project_name,
+        "version": settings.app_version,
+        "environment": settings.environment
     }
 
 
-# Root endpoint
-@app.get("/")
+# Root endpoint - Serves your beautiful custom HTML landing page
+@app.get("/", response_class=HTMLResponse)
 async def root():
-    """Root endpoint - returns API info."""
-    return {
-        "message": "Welcome to Jakasipul Core API",
-        "docs": "/docs",
-        "health": "/health"
-    }
+    """Root endpoint - Returns the custom HTML dashboard."""
+    html_path = "app/static/index.html"
+    
+    # Check if the HTML dashboard exists, otherwise serve a basic fallback
+    if os.path.exists(html_path):
+        with open(html_path, "r", encoding="utf-8") as file:
+            return file.read()
+            
+    return f"""
+    <html>
+        <body style="font-family: sans-serif; text-align: center; padding: 50px;">
+            <h1>🚌 {settings.project_name}</h1>
+            <p>API is running, but index.html was not found in app/static/</p>
+            <a href="/docs">View API Docs</a>
+        </body>
+    </html>
+    """
 
 
-# Mount static files if they exist
+# Mount static assets if the folder exists (for CSS/JS/Images later)
 if os.path.exists("app/static"):
     app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 
-# Include routers (can be added later)
+# Include routers (can be uncommented as you build them out)
 # from app.api import routes
 # app.include_router(routes.router)
 
@@ -75,9 +85,9 @@ if os.path.exists("app/static"):
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(
-        "app.main:app",
-        host="0.0.0.0",
-        port=8000,
+        "app.main:app",  # Assumes running from project root folder
+        host=settings.host,
+        port=settings.port,
         reload=True,
         log_level="info"
     )

@@ -6,7 +6,6 @@ Main application module for East African mobility routing and booking engine.
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
 import os
 
 # Import core modules
@@ -75,7 +74,7 @@ if os.path.exists("app/static"):
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(
-        "app.main:app",
+        "app.main:app",  # Change to "main:app" if this file is NOT inside an "app" folder
         host="0.0.0.0",
         port=8000,
         reload=True,

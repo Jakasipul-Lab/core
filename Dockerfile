@@ -1,25 +1,30 @@
-# Step 1: Use an official, secure Node image to build the app
-FROM node:18-alpine AS builder
+# Use Python 3.11 slim image for FastAPI
+FROM python:3.11-slim
+
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci
-COPY . .
-RUN npm run build
 
-# Step 2: Create the production runner to keep the final image tiny and fast
-FROM node:18-alpine AS runner
-WORKDIR /app
-ENV NODE_ENV=production
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy built assets from step 1
-COPY --from:builder /app/public ./public
-COPY --from:builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from:builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# Copy requirements and install dependencies
+COPY Requirements.txt .
+RUN pip install --no-cache-dir -r Requirements.txt
 
-USER nextjs
-EXPOSE 3000
-ENV PORT=3000
+# Copy application code
+COPY app ./app
 
-CMD ["node", "server.js"]
+# Create non-root user for security
+RUN useradd -m -u 1001 appuser && chown -R appuser:appuser /app
+USER appuser
+
+# Expose port
+EXPOSE 8000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
+
+# Run the application
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

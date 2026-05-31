@@ -3,60 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jakasipul Core: Mobility API</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex flex-col justify-between">
-
-    <main class="max-w-4xl mx-auto px-6 py-12 flex-grow flex flex-col justify-center">
+    <title>Jakasipul Core API</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         
-        <div class="text-center space-y-4 mb-10">
-            <div class="inline-flex items-center justify-center w-20 h-20 bg-emerald-500/10 text-emerald-400 rounded-2xl border border-emerald-500/20 text-4xl shadow-lg shadow-emerald-500/5 mb-2">
-                <i class="fa-solid fa-bus-simple animate-pulse"></i>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 600px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+        
+        .status {
+            background: #f0f9ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
+            border-radius: 5px;
+        }
+        
+        .status-item {
+            padding: 8px 0;
+            color: #333;
+        }
+        
+        .status-item strong {
+            color: #667eea;
+        }
+        
+        .links {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.2);
+        }
+        
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: 2px solid #ddd;
+        }
+        
+        .btn-secondary:hover {
+            background: #e8e8e8;
+            border-color: #bbb;
+        }
+        
+        .footer {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+            color: #999;
+            font-size: 0.9em;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚌 Jakasipul Core</h1>
+        <p class="subtitle">East African Mobility Routing & Booking Engine</p>
+        
+        <div class="status">
+            <div class="status-item">
+                <strong>Status:</strong> ✅ Online and Running
             </div>
-            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-400 via-teal-300 to-sky-400 bg-clip-text text-transparent">
-                Jakasipul Core Engine
-            </h1>
-            <p class="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto font-medium">
-                High-performance, asynchronous transit routing and booking matrix powering East African mobility data.
-            </p>
+            <div class="status-item">
+                <strong>Version:</strong> 1.0.0
+            </div>
+            <div class="status-item">
+                <strong>Framework:</strong> FastAPI with Uvicorn
+            </div>
+            <div class="status-item">
+                <strong>Database:</strong> MongoDB (Motor async driver)
+            </div>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50 backdrop-blur-sm">
-                <div class="text-emerald-400 text-2xl mb-3"><i class="fa-solid fa-map-location-dot"></i></div>
-                <h3 class="text-lg font-bold text-white mb-1">Geospatial Routing</h3>
-                <p class="text-slate-400 text-sm">MongoDB 2dsphere indexing maps regional routes, stop-overs, and coordinates instantly.</p>
-            </div>
-            <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50 backdrop-blur-sm">
-                <div class="text-teal-400 text-2xl mb-3"><i class="fa-solid fa-clock-rotate-left"></i></div>
-                <h3 class="text-lg font-bold text-white mb-1">Matrix Scheduling</h3>
-                <p class="text-slate-400 text-sm">Asynchronous processing rules mapping dynamic cross-border delays and multi-zone arrivals.</p>
-            </div>
-            <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50 backdrop-blur-sm">
-                <div class="text-sky-400 text-2xl mb-3"><i class="fa-solid fa-ticket"></i></div>
-                <h3 class="text-lg font-bold text-white mb-1">Atomic Bookings</h3>
-                <p class="text-slate-400 text-sm">Race-condition safeguards preventing double-allocation across regional bus and rail sectors.</p>
-            </div>
+        
+        <div class="links">
+            <a href="/docs" class="btn btn-primary">📚 API Documentation (Swagger)</a>
+            <a href="/redoc" class="btn btn-secondary">📖 ReDoc</a>
+            <a href="/health" class="btn btn-secondary">💚 Health Check</a>
         </div>
-
-        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <a href="/docs" class="w-full sm:w-auto px-8 py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl transition duration-200 shadow-lg shadow-emerald-500/20 text-center flex items-center justify-center gap-2">
-                <i class="fa-solid fa-book-open"></i> Explore Swagger API Docs
-            </a>
-            <a href="/redoc" class="w-full sm:w-auto px-8 py-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-600 font-bold rounded-xl transition duration-200 text-center flex items-center justify-center gap-2">
-                <i class="fa-solid fa-layer-group"></i> View ReDoc
-            </a>
+        
+        <div class="footer">
+            <p>🛠️ Powered by FastAPI, Motor, MongoDB & Uvicorn</p>
+            <p style="margin-top: 10px;">Built for East African transport networks</p>
+            <div class="badge">Production Ready</div>
         </div>
-
-    </main>
-
-    <footer class="w-full text-center py-6 border-t border-slate-800/60 bg-slate-950/30 backdrop-blur-md">
-        <p class="text-xs text-slate-500 font-medium tracking-wider uppercase">
-            Engineered by <span class="text-emerald-400 font-semibold">Jakasipul-Lab</span> &copy; 2026
-        </p>
-    </footer>
-
+    </div>
 </body>
 </html>

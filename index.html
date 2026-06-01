@@ -1,10 +1,157 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Jakasipul Hub</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jakasipul Core API</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 600px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+        
+        .status {
+            background: #f0f9ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
+            border-radius: 5px;
+        }
+        
+        .status-item {
+            padding: 8px 0;
+            color: #333;
+        }
+        
+        .status-item strong {
+            color: #667eea;
+        }
+        
+        .links {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.2);
+        }
+        
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: 2px solid #ddd;
+        }
+        
+        .btn-secondary:hover {
+            background: #e8e8e8;
+            border-color: #bbb;
+        }
+        
+        .footer {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+            color: #999;
+            font-size: 0.9em;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-  <h1>Jakasipul Hub</h1>
-  <p>Restoring your site ✅</p>
+    <div class="container">
+        <h1>🚌 Jakasipul Core</h1>
+        <p class="subtitle">East African Mobility Routing & Booking Engine</p>
+        
+        <div class="status">
+            <div class="status-item">
+                <strong>Status:</strong> ✅ Online and Running
+            </div>
+            <div class="status-item">
+                <strong>Version:</strong> 1.0.0
+            </div>
+            <div class="status-item">
+                <strong>Framework:</strong> FastAPI with Uvicorn
+            </div>
+            <div class="status-item">
+                <strong>Database:</strong> MongoDB (Motor async driver)
+            </div>
+        </div>
+        
+        <div class="links">
+            <a href="/docs" class="btn btn-primary">📚 API Documentation (Swagger)</a>
+            <a href="/redoc" class="btn btn-secondary">📖 ReDoc</a>
+            <a href="/health" class="btn btn-secondary">💚 Health Check</a>
+        </div>
+        
+        <div class="footer">
+            <p>🛠️ Powered by FastAPI, Motor, MongoDB & Uvicorn</p>
+            <p style="margin-top: 10px;">Built for East African transport networks</p>
+            <div class="badge">Production Ready</div>
+        </div>
+    </div>
 </body>
 </html>
